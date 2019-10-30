@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - Coin
+  - Chest
+  - enemy
+  - Gem
   layers:
   - Default
   - TransparentFX
