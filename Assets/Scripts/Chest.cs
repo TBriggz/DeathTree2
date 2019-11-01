@@ -5,11 +5,11 @@ using UnityEngine;
 public class Chest : MonoBehaviour
 {
 
-    private AudioSource explosionSound;
+    private AudioSource chestOpen;
     // Start is called before the first frame update
     void Start()
     {
-
+        chestOpen = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -18,16 +18,21 @@ public class Chest : MonoBehaviour
 
     }
 
+    void TurnOffGameObject()
+    {
+        gameObject.SetActive(false);
+        Destroy(gameObject);
+    }
+
     void OnTriggerEnter2D(Collider2D target)
     {
 
         if (target.tag == "Player")
         {
 
-            //Destroy(.gameObject);
-            gameObject.SetActive(false);
             Score.scoreValue += 250;
-            explosionSound.Play();
+            chestOpen.Play();
+            Invoke("TurnOffGameObject", 0.3f);
         }
     }
 }

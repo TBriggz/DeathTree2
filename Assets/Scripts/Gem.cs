@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Gem : MonoBehaviour
 {
+    private AudioSource PickedCoin;
     // Start is called before the first frame update
     void Start()
     {
-        
+        PickedCoin = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -16,16 +17,21 @@ public class Gem : MonoBehaviour
         
     }
 
+    void TurnOffGameObject()
+    {
+        gameObject.SetActive(false);
+        Destroy(gameObject);
+    }
+
     void OnTriggerEnter2D(Collider2D target)
     {
 
         if (target.tag == "Player")
         {
 
-            //Destroy(.gameObject);
-            gameObject.SetActive(false);
             Score.scoreValue += 100;
-            //explosionSound.Play();
+            PickedCoin.Play();
+            Invoke("TurnOffGameObject", 0.3f);
         }
     }
 }

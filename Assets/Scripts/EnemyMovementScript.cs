@@ -22,6 +22,14 @@ public class EnemyMovementScript : MonoBehaviour
         Move();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            GameController.health -= 1;
+        }
+    }
+
     void Move()
     {
         if (canMove)
