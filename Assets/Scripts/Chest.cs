@@ -6,6 +6,7 @@ public class Chest : MonoBehaviour
 {
 
     private AudioSource chestOpen;
+    private Animation anim;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +30,7 @@ public class Chest : MonoBehaviour
 
         if (target.tag == "Player")
         {
-
+            anim.Play("chest");
             Score.scoreValue += 250;
             chestOpen.Play();
             Invoke("TurnOffGameObject", 0.3f);

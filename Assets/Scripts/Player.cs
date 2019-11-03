@@ -11,6 +11,12 @@ public class Player : MonoBehaviour
     public float speed;
 
     public bool isGrounded;
+    bool facingRight = true;
+    public GameObject bulletRight, bulletLeft;
+    Vector2 bulletPos;
+    private AudioSource Bullet;
+    public float  fireRate = 0.5f;
+    float nextFire = 0.0f;
 
     public void Start()
     {
@@ -32,12 +38,20 @@ public class Player : MonoBehaviour
         if (Input.GetAxis("Horizontal") < 0)
         {
             characterScale.x = -1;
+            facingRight = false;
         }
         if (Input.GetAxis("Horizontal") > 0)
         {
             characterScale.x = 1;
+            facingRight = true;
         }
         transform.localScale = characterScale;
+
+        if (Input.GetButtonDown ("Fire1") && Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            fire ();
+        }
 
     }
 
@@ -69,5 +83,20 @@ public class Player : MonoBehaviour
     private void HandleMovement(float horizontal)
     {
         myAnimator.SetFloat("speed", Mathf.Abs(horizontal));
+    }
+    void fire ()
+    {
+        bulletPos = transform.position;
+        if (facingRight)
+        {
+            bulletPos += new Vector2 (+1f, -0.23f);
+            Instantiate(bulletRight, bulletPos, Quaternion.identity);
+            Bullet.Play();
+        }
+        else
+        {
+            bulletPos += new Vector2(-1f, -0.23f);
+            Instantiate(bulletLeft, bulletPos, Quaternion.identity);
+        }
     }
 }

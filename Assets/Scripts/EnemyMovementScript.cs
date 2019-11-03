@@ -7,13 +7,14 @@ public class EnemyMovementScript : MonoBehaviour
 
     public float speed = 1f;
     private bool canMove = true;
+    private AudioSource Death;
     //public float bound_X = -11f;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Death = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,6 +29,20 @@ public class EnemyMovementScript : MonoBehaviour
         {
             GameController.health -= 1;
         }
+
+        if (collision.gameObject.tag == "Rock")
+        {
+            Vector3 temp = transform.position;
+            temp.x += speed * Time.deltaTime;
+            transform.position = temp;
+        }
+
+        if (collision.gameObject.tag == "Bullet")
+        {
+            Score.scoreValue += 50;
+            Death.Play();
+            Invoke("TurnOffGameObject", 0.3f);
+        }
     }
 
     void Move()
@@ -38,10 +53,6 @@ public class EnemyMovementScript : MonoBehaviour
             Vector3 temp = transform.position;
             temp.x -= speed * Time.deltaTime;
             transform.position = temp;
-
-            //if (temp.x < bound_X)
-            //    gameObject.SetActive(false);
-
 
         }
     }

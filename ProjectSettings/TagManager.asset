@@ -9,6 +9,7 @@ TagManager:
   - Chest
   - enemy
   - Gem
+  - Bullet
   layers:
   - Default
   - TransparentFX
